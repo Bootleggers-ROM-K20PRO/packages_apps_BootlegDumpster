@@ -100,6 +100,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="statusbar_clock_cat"
+        android:title="@string/date_and_time">
+
+    <Preference
+         android:key="clock_settings"
+         android:title="@string/clock_style_category_title"
+         android:summary="@string/clock_style_category_summary"
+         android:fragment="com.bootleggers.dumpster.fragments.ClockSettings" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="statusbar_misc_cat"
         android:title="@string/misc_title">
 
