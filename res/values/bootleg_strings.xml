@@ -752,4 +752,8 @@
     <string name="volte_icon_volit">VoLIT Icon</string>
     <string name="volte_icon_asus">VoLTE Asus Icon</string>
 
+    <!-- Charging animation -->
+    <string name="charging_animation_title">Charging animation</string>
+    <string name="charging_animation_summary">Display an animation when the device is plugged in</string>
+
 </resources>
