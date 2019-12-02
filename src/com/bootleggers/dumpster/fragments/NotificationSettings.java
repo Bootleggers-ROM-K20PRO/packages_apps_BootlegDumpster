@@ -20,6 +20,10 @@ import com.android.settings.R;
 
 import com.android.settings.SettingsPreferenceFragment;
 
+import net.margaritov.preference.colorpicker.ColorPickerPreference;
+import com.bootleggers.dumpster.preferences.SystemSettingMasterSwitchPreference;
+import com.bootleggers.dumpster.preferences.CustomSeekBarPreference;
+
 import com.android.internal.logging.nano.MetricsProto;
 
 public class NotificationSettings extends SettingsPreferenceFragment
@@ -27,6 +31,9 @@ public class NotificationSettings extends SettingsPreferenceFragment
 
     private PreferenceCategory mLedsCategory;
     private Preference mChargingLeds;
+    private ColorPickerPreference mEdgeLightColorPreference;
+
+    private static final String PULSE_AMBIENT_LIGHT_COLOR = "pulse_ambient_light_color";
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -46,15 +53,41 @@ public class NotificationSettings extends SettingsPreferenceFragment
           if (mChargingLeds == null) {
             prefSet.removePreference(mLedsCategory);
         }
+
+        mEdgeLightColorPreference = (ColorPickerPreference) findPreference(PULSE_AMBIENT_LIGHT_COLOR);
+        int edgeLightColor = Settings.System.getInt(getContentResolver(),
+                Settings.System.PULSE_AMBIENT_LIGHT_COLOR, 0xFF3980FF);
+        mEdgeLightColorPreference.setNewPreviewColor(edgeLightColor);
+        mEdgeLightColorPreference.setAlphaSliderEnabled(false);
+        String edgeLightColorHex = String.format("#%08x", (0xFF3980FF & edgeLightColor));
+        if (edgeLightColorHex.equals("#ff3980ff")) {
+            mEdgeLightColorPreference.setSummary(R.string.default_string);
+        } else {
+            mEdgeLightColorPreference.setSummary(edgeLightColorHex);
+        }
+        mEdgeLightColorPreference.setOnPreferenceChangeListener(this);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver resolver = getActivity().getContentResolver();
+        if (preference == mEdgeLightColorPreference) {
+            String hex = ColorPickerPreference.convertToARGB(
+                    Integer.valueOf(String.valueOf(newValue)));
+            if (hex.equals("#ff3980ff")) {
+                preference.setSummary(R.string.default_string);
+            } else {
+                preference.setSummary(hex);
+            }
+            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PULSE_AMBIENT_LIGHT_COLOR, intHex);
+            return true;
+        }
         switch (preference.getKey()) {
             default:
-                return false;
-        }
+        return false;
+       }
     }
 
     @Override
