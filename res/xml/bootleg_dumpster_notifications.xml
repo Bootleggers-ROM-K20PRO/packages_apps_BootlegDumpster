@@ -51,6 +51,12 @@
             android:summary="@string/notification_headers_summary"
             android:defaultValue="true" />
 
+        <com.bootleggers.dumpster.preferences.SystemSettingSwitchPreference
+            android:key="hide_smart_replies"
+            android:title="@string/hide_smart_replies_title"
+            android:summary="@string/hide_smart_replies_summary"
+            android:defaultValue="false"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
