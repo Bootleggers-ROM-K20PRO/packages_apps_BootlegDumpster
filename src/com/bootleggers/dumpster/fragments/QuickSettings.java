@@ -52,6 +52,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements
     private SystemSettingEditTextPreference mFooterString;
     private String mFooterFallbackString;
     private CustomSeekBarPreference mQsBlurRadius;
+    private CustomSeekBarPreference mQsPanelAlpha;
 
     private static final String QS_PRIVACY_PILL = "qs_show_privacy_chip";
     private static final String CUSTOM_HEADER_BROWSE = "custom_header_browse";
@@ -64,6 +65,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements
     private static final String FILE_HEADER_SELECT = "file_header_select";
     private static final String FOOTER_TEXT_STRING = "footer_text_string";
     private static final String QS_BLUR_RADIUS = "qs_blur_radius"; 
+    private static final String QS_PANEL_ALPHA = "qs_panel_alpha";
 
     private static final int REQUEST_PICK_IMAGE = 0;
 
@@ -143,6 +145,12 @@ public class QuickSettings extends SettingsPreferenceFragment implements
                 Settings.System.QS_BLUR_RADIUS, 0);
             mQsBlurRadius.setValue((blurRadius));
             mQsBlurRadius.setOnPreferenceChangeListener(this);
+
+        mQsPanelAlpha = (CustomSeekBarPreference) findPreference(QS_PANEL_ALPHA);
+        int qsPanelAlpha = Settings.System.getInt(getContentResolver(),
+                Settings.System.QS_PANEL_BG_ALPHA, 255);
+        mQsPanelAlpha.setValue((int)(((double) qsPanelAlpha / 255) * 100));
+        mQsPanelAlpha.setOnPreferenceChangeListener(this);
     }
 
     private void updateHeaderProviderSummary(boolean headerEnabled) {
@@ -222,6 +230,13 @@ public class QuickSettings extends SettingsPreferenceFragment implements
                 Settings.System.putInt(resolver,
                         Settings.System.QS_BLUR_RADIUS, blurRadius);
                 return true;
+
+            case QS_PANEL_ALPHA:
+                int bgAlpha = (Integer) newValue;
+                int trueValue = (int) (((double) bgAlpha / 100) * 255);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.QS_PANEL_BG_ALPHA, trueValue);
+            return true;
 
             default:
                 return false;

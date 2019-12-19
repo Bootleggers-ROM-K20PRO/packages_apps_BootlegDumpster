@@ -54,6 +54,24 @@
         android:defaultValue="true" />
 
     <com.bootleggers.dumpster.preferences.SystemSettingSwitchPreference
+        android:key="footer_text_show"
+        android:title="@string/footer_text_show_title"
+        android:summary="@string/footer_text_show_summary"
+        android:defaultValue="false" />
+
+    <com.bootleggers.dumpster.preferences.SystemSettingEditTextPreference
+        android:key="footer_text_string"
+        android:title="@string/footer_text_string_title"
+        android:summary="@string/footer_text_string_summary"
+        android:dependency="footer_text_show" />
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+        android:title="QS Blur" />
+
+    <com.bootleggers.dumpster.preferences.SystemSettingSwitchPreference
         android:key="qs_blur"
         android:title="@string/blur_quicksettings_title"
         android:summary="@string/blur_quicksettings_summary"
@@ -68,17 +86,14 @@
         settings:min="1"
         android:defaultValue="7" />
 
-    <com.bootleggers.dumpster.preferences.SystemSettingSwitchPreference
-        android:key="footer_text_show"
-        android:title="@string/footer_text_show_title"
-        android:summary="@string/footer_text_show_summary"
-        android:defaultValue="false" />
-
-    <com.bootleggers.dumpster.preferences.SystemSettingEditTextPreference
-        android:key="footer_text_string"
-        android:title="@string/footer_text_string_title"
-        android:summary="@string/footer_text_string_summary"
-        android:dependency="footer_text_show" />
+       <com.bootleggers.dumpster.preferences.CustomSeekBarPreference
+            android:key="qs_panel_alpha"
+            android:title="@string/qs_panel_alpha_title"
+            android:summary="@string/qs_panel_alpha_summary"
+            android:max="100"
+            settings:min="0"
+            android:defaultValue="100"
+            android:persistent="false" />
 
     </PreferenceCategory>
 
