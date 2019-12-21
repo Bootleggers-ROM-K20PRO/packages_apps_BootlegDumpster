@@ -31,9 +31,11 @@ public class NotificationSettings extends SettingsPreferenceFragment
 
     private PreferenceCategory mLedsCategory;
     private Preference mChargingLeds;
-    private ColorPickerPreference mEdgeLightColorPreference;
+    private SystemSettingMasterSwitchPreference mEdgePulse;
 
-    private static final String PULSE_AMBIENT_LIGHT_COLOR = "pulse_ambient_light_color";
+    private static final String PULSE_AMBIENT_LIGHT = "pulse_ambient_light";
+
+
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -54,33 +56,20 @@ public class NotificationSettings extends SettingsPreferenceFragment
             prefSet.removePreference(mLedsCategory);
         }
 
-        mEdgeLightColorPreference = (ColorPickerPreference) findPreference(PULSE_AMBIENT_LIGHT_COLOR);
-        mEdgeLightColorPreference.setOnPreferenceChangeListener(this);
-        int edgeLightColor = Settings.System.getInt(getContentResolver(),
-                Settings.System.PULSE_AMBIENT_LIGHT_COLOR, 0xFF3980FF);
-        String edgeLightColorHex = String.format("#%08x", (0xFF3980FF & edgeLightColor));
-        if (edgeLightColorHex.equals("#ff3980ff")) {
-            mEdgeLightColorPreference.setSummary(R.string.default_string);
-        } else {
-            mEdgeLightColorPreference.setSummary(edgeLightColorHex);
-        }
-        mEdgeLightColorPreference.setNewPreviewColor(edgeLightColor);
+        mEdgePulse = (SystemSettingMasterSwitchPreference) findPreference(PULSE_AMBIENT_LIGHT);
+        mEdgePulse.setOnPreferenceChangeListener(this);
+        int edgePulse = Settings.System.getInt(getContentResolver(),
+                PULSE_AMBIENT_LIGHT, 0);
+        mEdgePulse.setChecked(edgePulse != 0);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver resolver = getActivity().getContentResolver();
-        if (preference == mEdgeLightColorPreference) {
-            String hex = ColorPickerPreference.convertToARGB(
-                    Integer.valueOf(String.valueOf(newValue)));
-            if (hex.equals("#ff3980ff")) {
-                preference.setSummary(R.string.default_string);
-            } else {
-                preference.setSummary(hex);
-            }
-            int intHex = ColorPickerPreference.convertToColorInt(hex);
+            if (preference == mEdgePulse) {
+            boolean value = (Boolean) newValue;
             Settings.System.putInt(getContentResolver(),
-                    Settings.System.PULSE_AMBIENT_LIGHT_COLOR, intHex);
+    	                  PULSE_AMBIENT_LIGHT, value ? 1 : 0);
             return true;
         }
         switch (preference.getKey()) {
