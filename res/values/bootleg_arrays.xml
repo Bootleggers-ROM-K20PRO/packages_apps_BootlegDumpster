@@ -476,7 +476,6 @@
         <item>@string/fod_recog_animation_miui_pulse</item>
         <item>@string/fod_recog_animation_miui_pulse_white</item>
         <item>@string/fod_recog_animation_miui_rhythm</item>
-        <item>@string/fod_recog_animation_op_cosmos</item>
         <item>@string/fod_recog_animation_op_mclaren</item>
         <item>@string/fod_recog_animation_op_stripe</item>
         <item>@string/fod_recog_animation_op_wave</item>
