@@ -469,7 +469,6 @@
 
     <!-- FOD Recognizing fingerprint animations -->
     <string-array name="fod_recog_animation_entries" translatable="false">
-        <item>@string/fod_recog_animation_miui_normal</item>
         <item>@string/fod_recog_animation_miui_light</item>
         <item>@string/fod_recog_animation_miui_pop</item>
         <item>@string/fod_recog_animation_miui_pulse</item>
