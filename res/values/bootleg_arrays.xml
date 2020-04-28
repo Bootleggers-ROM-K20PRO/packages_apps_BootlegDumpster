@@ -397,6 +397,7 @@
         <item>@string/fod_recog_animation_pureview_halo_ring</item>
         <item>@string/fod_recog_animation_pureview_molecular</item>
         <item>@string/fod_recog_animation_bluefirework</item>
+        <item>@string/fod_recog_animation_coloros7_1</item>
         <item>@string/fod_recog_animation_coloros7_2</item>
     </string-array>
 
@@ -418,6 +419,7 @@
         <item>14</item>
         <item>15</item>
         <item>16</item>
+        <item>17</item>
     </string-array>
 
     <!-- Gaming mode -->
